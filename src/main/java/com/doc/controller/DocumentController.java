@@ -1,6 +1,7 @@
 
 package com.doc.controller;
 
+import io.github.pixee.security.Filenames;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -36,7 +37,7 @@ public class DocumentController {
 	public ResponseEntity<String> upload(@RequestParam("file") MultipartFile file,
 			@RequestParam("emailId") String emailId) throws IOException {
 		try {
-			if (!checkFileValidation(file.getOriginalFilename())) {
+			if (!checkFileValidation(Filenames.toSimpleFileName(file.getOriginalFilename()))) {
 				return fileUpload(file, emailId);
 			} else {
 				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("File is already exist.");
